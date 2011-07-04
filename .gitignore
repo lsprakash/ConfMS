@@ -1,2 +1,5 @@
 ConfMSProject/_ReSharper.ConfMSProject/**/*
 ConfMSProject/obj/**/*
+ConfMSTest/obj/**/*
+ConfMSProject/ConfMSProject.5.1.ReSharper.user
+ConfMSProject/ConfMSProject.suo
