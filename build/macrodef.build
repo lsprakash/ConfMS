@@ -1,34 +1,41 @@
 <?xml version="1.0"?>
-<project name="SharedMacroDef" default="compile" basedir=".">
-<macrodef name="component-compile">
-<attributes>
-  <attribute name="solution"/>
-  <attribute name="virtual.dirs" default="empty.dict"/>
-</attributes>
-<sequential>
-  <if test="${dict::exists(virtual.dirs)}">
-	<dict-foreach dictionary="${virtual.dirs}" key-property="_virtual.dir" value-property="_physical.dir">
-	  <if test="${_virtual.dir!='NullService'}">
-		<if test="${not directory::exists(_physical.dir)}">
-		  <fail message="Cannot create virtual directory ${_virtual.dir} because ${_physical.dir} doesn't exist."/>
-		</if>
-		<echo message="Physical directory = ${_physical.dir}"/>
-		<mkiisdir vdirname="${_virtual.dir}" dirpath="${_physical.dir}" authntlm="true" authanonymous="false" />
-	  </if>
-	</dict-foreach>
-	<if test="${not property::exists('XP')}">
-	  <exec program="${app.command}" commandline="unlock config /section:windowsAuthentication" failonerror="false"/>
-	</if>
-  </if>
-  <project-compile path="${solution}"/>
-</sequential>
-</macrodef>
- <macrodef name="project-compile">
+<project name="SharedMacroDef" basedir=".">
+  <loadtasks path="NantTasks"/>
+  <macrodef name="component-compile">
     <attributes>
-      <attribute name="path"/>
+      <attribute name="solution" />
+      <attribute name="virtual.dirs" default="empty.dict" />
     </attributes>
     <sequential>
-      <exec program="${visualstudio-compiler}" commandline="&quot;${path}&quot; /build ${compile.configuration}" />
+      <if test="${dict::exists(virtual.dirs)}">
+        <dict-foreach dictionary="${virtual.dirs}"
+        key-property="_virtual.dir" value-property="_physical.dir">
+          <if test="${_virtual.dir!='NullService'}">
+            <if test="${not directory::exists(_physical.dir)}">
+              <fail message="Cannot create virtual directory ${_virtual.dir} because ${_physical.dir} doesn't exist." />
+            </if>
+            <echo message="Physical directory = ${_physical.dir}" />
+            <mkiisdir vdirname="${_virtual.dir}"
+            dirpath="${_physical.dir}" authntlm="true"
+            authanonymous="false" />
+          </if>
+        </dict-foreach>
+        <if test="${not property::exists('XP')}">
+          <exec program="${app.command}"
+          commandline="unlock config /section:windowsAuthentication"
+          failonerror="false" />
+        </if>
+      </if>
+      <project-compile path="${solution}" />
     </sequential>
   </macrodef>
-  </project>
+  <macrodef name="project-compile">
+    <attributes>
+      <attribute name="path" />
+    </attributes>
+    <sequential>
+      <exec program="${visualstudio-compiler}"
+      commandline="&quot;${path}&quot; /build ${compile.configuration}" />
+    </sequential>
+  </macrodef>
+</project>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<project name="ConfMS" default="compile" basedir=".">
+  <property name="solution.dir" value=".."/>
+  <property name="compile.configuration" value="Debug"/>
+
+  <include buildfile="macrodef.build"/>
+
+  <echo message="hehehehe${environment::get-variable('VS100COMNTOOLS')}"/>
+  <property name="visualstudio-compiler" value="${environment::get-variable('VS100COMNTOOLS')}..\IDE\devenv.com" readonly="true" />
+  <target name="compile">
+	<component-compile solution="${solution.dir}/ConfMSProject.sln" />
+  </target>
+</project>

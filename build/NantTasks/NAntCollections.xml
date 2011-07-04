@@ -1,0 +1,970 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NAntCollections</name>
+    </assembly>
+    <members>
+        <member name="T:NAntCollections.Dictionary.DictionaryItemElement">
+            <summary>
+            Represents an individual item in a dictionary.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.IfUnlessElement">
+            <summary>
+            Base class for an element which should have if and unless attributes.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.IfUnlessElement.If">
+            <summary>
+            If <see langword="true" /> then then element will be included.
+            The default is <see langword="true" />.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.IfUnlessElement.Unless">
+            <summary>
+            Opposite of <see cref="P:NAntCollections.IfUnlessElement.If"/>. If <see langword="false"/> then then element will be included.
+            The default is <see langword="false"/>.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryItemElement.Key">
+            <summary>
+            The key of the dictionary item.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryItemElement.Value">
+            <summary>
+            The value of the dictionary item.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryFunctions">
+            <summary>
+            Functions for manipulating dictionaries.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryFunctions.#ctor(NAnt.Core.Project,NAnt.Core.PropertyDictionary)">
+            <remarks>
+            Not sure why FunctionSetBase should have a constructor if all
+            of the function methods are static.  When will one of these
+            ever get instantiated?
+            </remarks>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryFunctions.GetValue(System.String,System.String)">
+            <summary>
+            Get the value of an item in a dictionary for a particular key.
+            </summary>
+            <param name="dictName">The name of the dictionary.</param>
+            <param name="key">The key in the dictionary.</param>
+            <returns>The value in the dictionary for <paramref name="key" />.</returns>
+            <example>
+              <para>
+              Get the value of key 'MyFirstKey'.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-create dictionary="MyDict">
+              <dict-item key="MyFirstKey" value="MyFirstValue"/>
+            </dict-create>
+            <echo message="My value is ${dict::get-value('MyDict','MyFirstKey')}"/>
+                ]]>
+              </code>
+              <b>Result:</b> My value is MyFirstValue
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryFunctions.Count(System.String)">
+            <summary>
+            Get the count of all items in a dictionary.
+            </summary>
+            <param name="dictName">The name of the dictionary.</param>
+            <returns>The number of items in the dictionary.</returns>
+            <example>
+              <para>
+              Get the count of items in key 'MyDict'.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-create dictionary="MyDict">
+              <dict-item key="MyFirstKey" value="MyFirstValue"/>
+              <dict-item key="MySecondKey" value="MySecondValue"/>
+            </dict-create>
+            <echo message="Count is ${dict::count('MyDict')}"/>
+                ]]>
+              </code>
+              <b>Result:</b> Count is 2
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryFunctions.IsEmpty(System.String)">
+            <summary>
+            Determine if the dictionary is empty
+            </summary>
+            <param name="dictName">The name of the dictionary.</param>
+            <returns><see langword="true" /> if the dictionary has items, <see langword="false" /> if the dictionary does NOT exist or has no items</returns>
+            <example>
+              <para>
+              Determine if a dictionary is empty.
+              </para>
+              <code>
+                <![CDATA[
+            <echo message="Dictionary is empty: ${dict::is-empty('MyDict')}"/>
+            <dict-add dictionary="MyDict" key="MyFirstKey" value="MyFirstValue"/>
+            <echo message="Dictionary is empty: ${dict::is-empty('MyDict')}"/>
+            <dict-remove dictionary="MyDict" key="MyFirstKey"/>
+            <echo message="Dictionary is empty: ${dict::is-empty('MyDict')}"/>
+                ]]>
+              </code>
+              <b>Result:</b><br/>
+                Dictionary is empty: True<br/>
+                Dictionary is empty: False<br/>
+                Dictionary is empty: True<br/>
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryFunctions.ContainsKey(System.String,System.String)">
+            <summary>
+            Determine whether a dictionary contains a particular key.
+            </summary>
+            <param name="dictName">The name of the dictionary.</param>
+            <param name="key">The key in the dictionary.</param>
+            <returns>
+            <see langword="true" /> if the dictionary contains an item with 
+            that <paramref name="key" />; otherwise <see langword="false" />.
+            </returns>
+            <example>
+              <para>Determine if MyDict contains an item with key MyFirstKey.</para>
+              <code>
+                <![CDATA[
+            <dict-create dictionary="MyDict">
+              <dict-item key="MyFirstKey" value="MyFirstValue"/>
+              <dict-item key="MySecondKey" value="MySecondValue"/>
+            </dict-create>
+            <echo message="MyFirstKey found: ${dict::contains-key('MyDict','MyFirstKey)}"/>
+            <echo message="MyThirdKey found: ${dict::contains-key('MyDict','MyThirdKey)}"/>
+                ]]>
+              </code>
+              <b>Result:</b><br/>
+              MyFirstKey found: True<br/>
+              MySecondKey found: False
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryFunctions.Exists(System.String)">
+            <summary>
+            Determine whether a dictionary of a given name exists.
+            </summary>
+            <param name="dictName">The name of the dictionary.</param>
+            <returns>
+            <see langword="true" /> if the dictionary exists (i.e. has been used by
+            other dictionary functions or tasks); otherwise <see langword="false" />.
+            </returns>
+            <example>
+              <para>Determine if MyDict exists.</para>
+              <code>
+                <![CDATA[
+            <echo message="MyDict exists? ${dict::exists('MyDict'}"/>
+            <dict-add dictionary="MyDict" key="MyFirstKey" value="MyFirstValue"/>
+            <echo message="MyDict exists now? ${dict::exists('MyDict'}"/>
+                ]]>
+              </code>
+              <b>Result:</b><br/>
+              MyDict exists? False<br/>
+              MyDict exists now? True
+            </example>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryAdd">
+            <summary>
+            Add an item to a dictionary.  
+            </summary>
+            <remarks>
+            <para>
+            If <see cref="P:NAntCollections.Dictionary.DictionaryAdd.Key"/> is already present in dictionary and
+            overwrite is <see langword="false"/>, task will fail.
+            </para>
+            <para>
+            If a dictionary of the provided name does not exist,
+            it will be created.
+            </para>
+            </remarks>
+            <example>
+              <para>
+              Add two items to MyDict.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-add dictionary="MyDict" key="MyFirstKey"  value="MyFirstValue"/>
+            <dict-add dictionary="MyDict" key="MySecondKey" value="MySecondValue"/>
+                ]]>
+              </code>
+            </example>
+            <example>
+              <para>
+              Add an item to MyDict, and then overwrite its value.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-add dictionary="MyDict" key="MyFirstKey" value="MyFirstValue"/>
+            <dict-add dictionary="MyDict" key="MyFirstKey" value="MyReplacedFirstValue" overwrite="true"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryBase">
+            <summary>
+            Base class for all tasks which operate on a single dictionary.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryBase.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryBase.Dictionary">
+            <summary>
+            The Dictionary related to this Task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryBase.DictionaryName">
+            <summary>
+            The name of the dictionary to operate on.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryAdd.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryAdd.Key">
+            <summary>
+            The key of the new item.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryAdd.Value">
+            <summary>
+            The value of the new item.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryAdd.Overwrite">
+            <summary>
+            If the specified <see cref="P:NAntCollections.Dictionary.DictionaryAdd.Key"/> is already
+            present in the dictionary, this will cause the current value
+            to be overwritten with the specified <see cref="P:NAntCollections.Dictionary.DictionaryAdd.Value"/>.
+            The default is <see langword="false"/>.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryClear">
+            <summary>
+            Remove all items from a dictionary.
+            </summary>
+            <example>
+              <para>
+              Clear all items from MyDict.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-clear dictionary="MyDict"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryClear.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryCopy">
+            <summary>
+            Copy an existing dictionary into a new dictionary.
+            </summary>
+            <example>
+              <para>
+              Copy MyExistingDict into MyNewDict.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-copy list="MyExistingDict" into="MyNewDict"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryCopy.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryCopy.NewDictionaryName">
+            <summary>
+            Name of the new dictionary.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryCreate">
+            <summary>
+            Create a dictionary with an initial set of items.
+            </summary>
+            <example>
+              <para>
+              Create a dictionary with three initial items.  But only
+              include the second item if a specific property is set.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-create dictionary="MyDict">
+              <dict-item key="MyFirstKey" value="MyFirstValue"/>
+              <dict-item key="MySecondKey" value="MySecondValue" if="${property::exists('my.property')}"/>
+              <dict-item key="MyThirdKey" value="MyThirdValue"/>
+            </dict-create>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryCreate.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryCreate.Items">
+            <summary>
+            The items that should be present in the
+            dictionary when it is created.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryDumpTask">
+            <summary>
+            Outputs the contents of a dictionary.
+            </summary>
+            <remarks>
+            <para>
+            Primarily used for debugging.
+            </para>
+            <para>
+            Will limit output of an individual item to one line, with keys having
+            preference.  Therefore, if keys are too long it could end up that
+            values are not displayed at all.
+            </para>
+            </remarks>
+            <example>
+              <para>
+              Output the contents of MyDict.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-dump dictionary="MyDict"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryDumpTask.DetermineProperFormattingWidths">
+            <summary>
+            Loop through the dictionary and examine the console to figure
+            out the right widths for formatting output.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryDumpTask.WriteLine(System.String,System.String)">
+            <summary>
+            Output a line for specified key and value.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryDumpTask.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryForEach">
+            <summary>
+            Loop through each item in a dictionary.
+            </summary>
+            <example>
+              <para>
+              Echo the key/value of each item in MyDict.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-foreach dictionary="MyDict" key-property="_key" value-property="_val">
+              <echo message="Key: ${_key}"/>
+              <echo message="Value: ${_val}"/>
+            </dict-foreach>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryForEach.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryForEach.DictionaryName">
+            <summary>
+            The name of the dictionary to operate on.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryForEach.KeyProperty">
+            <summary>
+            The property to set to the key of the current item in the loop.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryForEach.ValueProperty">
+            <summary>
+            The property to set to the value of the current item in the loop.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryRemoveTask">
+            <summary>
+            Remove an item from a dictionary.  If the key is not
+            present in the dictionary, the task does nothing.
+            </summary>
+            <example>
+              <para>
+              Remove item with key MyFirstKey from MyDict.
+              </para>
+              <code>
+                <![CDATA[
+            <dict-remove dictionary="MyDict" key="MyFirstKey"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryRemoveTask.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.Dictionary.DictionaryRemoveTask.Key">
+            <summary>
+            The key of the item to remove.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.Dictionary.DictionaryManager">
+            <summary>
+            Utility class for working with dictionaries.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryManager.GetDictionary(System.String)">
+            <summary>
+            Get a dictionary based on a name.
+            </summary>
+            <param name="name">The name of the dictionary.</param>
+            <remarks>
+            If a dictionary of the given name does not exist yet, it will
+            be created and returned.
+            </remarks>
+            <returns>
+            The dictionary with the given <paramref name="name"/>.
+            </returns>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryManager.DictionaryExists(System.String)">
+            <summary>
+            Determine whether a dictionary of a given name exists.
+            </summary>
+            <param name="name">The name of the dictionary.</param>
+            <returns>
+            <see langword="true" /> if the dictionary exists;
+            <see langword="false" /> otherwise.
+            </returns>
+        </member>
+        <member name="M:NAntCollections.Dictionary.DictionaryManager.Reset">
+            <summary>
+            Remove all dictionaries from memory.
+            </summary>
+            <remarks>
+            Primarily used by unit tests.
+            </remarks>
+        </member>
+        <member name="T:NAntCollections.List.ListItemElement">
+            <summary>
+            Represents an individual item in a list.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListItemElement.Value">
+            <summary>
+            The value of the list item.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListFunctions">
+            <summary>
+            Functions for manipulating lists.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.List.ListFunctions.#ctor(NAnt.Core.Project,NAnt.Core.PropertyDictionary)">
+            <remarks>
+            Not sure why FunctionSetBase should have a constructor if all
+            of the function methods are static.  When will one of these
+            ever get instantiated?
+            </remarks>
+        </member>
+        <member name="M:NAntCollections.List.ListFunctions.GetValue(System.String,System.Int32)">
+            <summary>
+            Get the value in a particular position in a list.
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <param name="position">The zero-indexed position in the list.</param>
+            <returns>Value at the given position in the list.</returns>
+            <exception cref="T:NAnt.Core.BuildException">
+            If position is less than zero or exceeds the
+            amount of items in the list.
+            </exception>
+            <example>
+              <para>
+              Get the first value of MyList.
+              </para>
+              <code>
+                <![CDATA[
+            <list-create list="MyList">
+              <list-item value="MyFirstValue"/>
+              <list-item value="MySecondValue"/>
+            </list-create>
+            <echo message="First value is ${list::get-value('MyList',0)}"/>
+                ]]>
+              </code>
+              <b>Result:</b> First value is MyFirstValue
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListFunctions.Pop(System.String)">
+            <summary>
+            Get the value of the top item on the list stack (last added).
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <returns>Value of the top item on the list stack.</returns>
+            <example>
+              <para>
+              Get the top item on the list stack, remove it and return its value.
+              </para>
+              <code>
+                <![CDATA[
+            <list-add list="MyList" value="MyFirstValue"/>
+            <list-add list="MyList" value="MySecondValue"/>
+            <echo message="Last item added was ${list::pop(('MyList')}"/>
+                ]]>
+              </code>
+              <b>Result:</b> Last item added was MySecondValue
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListFunctions.Count(System.String)">
+            <summary>
+            Get the count of all items in a list.
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <returns>Count of items in the list.</returns>
+            <example>
+              <para>
+              Get the count of items in MyList.
+              </para>
+              <code>
+                <![CDATA[
+            <list-create list="MyList">
+              <list-item value="MyFirstValue"/>
+              <list-item value="MySecondValue"/>
+            </list-create>
+            <echo message="Count is ${list::count('MyList')}"/>
+                ]]>
+              </code>
+              <b>Result:</b> Count is 2
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListFunctions.IsEmpty(System.String)">
+            <summary>
+            Determine if the list is empty
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <returns><see langword="true" /> if the list has items, <see langword="false" /> if the list does NOT exist or has no items</returns>
+            <example>
+              <para>
+              Determine if a list is emptly.
+              </para>
+              <code>
+                <![CDATA[
+            <echo message="List is empty: ${list::is-empty(MyList)}"/>
+            <list-add list="MyList" value="MyFirstValue"/>
+            <echo message="List is empty: ${list::is-empty(MyList)}"/>
+            <list-remove list="MyList" value="MyFirstValue"/>
+            <echo message="List is empty: ${list::is-empty(MyList)}"/>
+                ]]>
+              </code>
+              <b>Result:</b>
+                List is empty: True
+                List is empty: False
+                List is empty: True
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListFunctions.Contains(System.String,System.String)">
+            <summary>
+            Determine if a list contains a particular value.
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <param name="val">The value to search for.</param>
+            <returns>
+            <see langword="true" /> if list contains <paramref name="key" />; 
+            otherwise <see langword="false" />.</returns>
+            <example>
+              <para>
+              Determine if MyList contains FirstValue and ThirdValue.
+              </para>
+              <code>
+                <![CDATA[
+            <list-create list="MyList">
+              <list-item value="MyFirstValue"/>
+              <list-item value="MySecondValue"/>
+            </list-create>
+            <echo message="MyFirstValue found? ${list::contains('MyList','MyFirstValue')}"/>
+            <echo message="MyThirdValue found? ${list::contains('MyList','MyThirdValue')}"/>
+                ]]>
+              </code>
+              <b>Result:</b><br/>
+              MyFirstValue found? True<br/>
+              MyThirdValue found? False
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListFunctions.Exists(System.String)">
+            <summary>
+            Determine whether a list of a given name exists.
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <returns>
+            <see langword="true" /> if the list exists (i.e. has been used by
+            other list functions or tasks); otherwise <see langword="false" />.
+            </returns>
+            <example>
+              <para>
+              Determine if MyList exists.
+              </para>
+              <code>
+                <![CDATA[
+            <echo message="MyList exists? ${list::exists('MyList')}"/>
+            <list-create list="MyList">
+              <list-item value="MyFirstValue"/>
+              <list-item value="MySecondValue"/>
+            </list-create>
+            <echo message="MyList exists now? ${list::exists('MyList')}"/>
+                ]]>
+              </code>
+              <b>Result:</b><br/>
+              MyList exists? False<br/>
+              MyList exists now? True
+            </example>
+        </member>
+        <member name="T:NAntCollections.List.ListAdd">
+            <summary>
+            Add an item to a list.
+            </summary>
+            <example>
+              <para>
+              Add two items to MyList.
+              </para>
+              <code>
+                <![CDATA[
+            <list-add list="MyList" value="MyFirstValue"/>
+            <list-add list="MyList" value="MySecondValue"/>
+                ]]>
+              </code>
+            </example>
+            <example>
+              <para>
+              Add a new item to MyList in the first position.
+              </para>
+              <code>
+                <![CDATA[
+            <list-add list="MyList" value="MyNewFirstValue" position="0"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="T:NAntCollections.List.ListBase">
+            <summary>
+            Base class for all tasks which operate on a single list.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.List.ListBase.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListBase.List">
+            <summary>
+            List related to the current Task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListBase.ListName">
+            <summary>
+            Name of the list to operate on.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.List.ListAdd.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListAdd.Value">
+            <summary>
+            The value of the new item.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListAdd.Position">
+            <summary>
+            Zero-based index of where the value should be inserted.
+            All items in that position or after will be have their
+            position shifted by one.  Specifying a position higher
+            than the max current position of the list will just add
+            at the end of the list.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListClear">
+            <summary>
+            Removes all items from a list.
+            </summary>
+            <example>
+              <para>
+              Clear all items from MyList.
+              </para>
+              <code>
+                <![CDATA[
+            <list-clear list="MyList"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListClear.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListCopy">
+            <summary>
+            Copy an existing list into a new list.
+            </summary>
+            <example>
+              <para>
+              Copy MyExistingList into MyNewList.
+              </para>
+              <code>
+                <![CDATA[
+            <list-copy list="MyExistingList" into="MyNewList"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListCopy.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListCopy.NewListName">
+            <summary>
+            Name of the new list.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListCreate">
+            <summary>
+            Create a list with an initial set of items.
+            </summary>
+            <example>
+              <para>
+              Create a list with three initial items.  But only
+              include the second item if a specific property is set.
+              </para>
+              <code>
+                <![CDATA[
+            <list-create dictionary="MyList">
+              <list-item value="MyFirstValue"/>
+              <list-item value="MySecondValue" if="${property::exists('my.property')}"/>
+              <list-item value="MyThirdValue"/>
+            </list-create>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListCreate.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListCreate.Items">
+            <summary>
+            The items that should be present in the
+            list when it is created.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListDump">
+            <summary>
+            Outputs the contents of a list.
+            </summary>
+            <remarks>
+            <para>
+            Primarily used for debugging.
+            </para>
+            <para>
+            Will truncate values if necessary so that a given item fits on one line.
+            </para>
+            </remarks>
+            <example>
+              <para>
+              Output the contents of MyList.
+              </para>
+              <code>
+                <![CDATA[
+            <list-dump list="MyList"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListDump.ExecuteTask">
+            <summary>
+            Task execution.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListForEach">
+            <summary>
+            Loop through each item in a list.
+            </summary>
+            <example>
+              <para>
+              Echo the value of each item in MyList.
+              </para>
+              <code>
+                <![CDATA[
+            <list-foreach list="MyList" value-property="_val">
+              <echo message="Value: ${_val}"/>
+            </list-foreach>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListForEach.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListForEach.ListName">
+            <summary>
+            The name of the list to operate on.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListForEach.ValueProperty">
+            <summary>
+            The property to set to the value of the current item in the loop.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListPush">
+            <summary>
+            Add an item to the top of a list stack.
+            </summary>
+            <example>
+              <para>
+              Push a new item onto a list.
+              </para>
+              <code>
+                <![CDATA[
+            <list-push list="MyList" value="NewValue"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListPush.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListRemove">
+            <summary>
+            Remove an item from a list.
+            </summary>
+            <example>
+              <para>
+              Remove item with a specific value.
+              </para>
+              <code>
+                <![CDATA[
+            <list-remove list="MyList" value="TargetValue"/>
+                ]]>
+              </code>
+            </example>
+            <example>
+              <para>
+              Remove first item.
+              </para>
+              <code>
+                <![CDATA[
+            <list-remove list="MyList" position="0"/>
+                ]]>
+              </code>
+            </example>
+        </member>
+        <member name="M:NAntCollections.List.ListRemove.ExecuteTask">
+            <summary>
+            Execute the task.
+            </summary>
+        </member>
+        <member name="P:NAntCollections.List.ListRemove.Value">
+            <summary>
+            The value of the item to remove.
+            Cannot specify both <see cref="P:NAntCollections.List.ListRemove.Value"/> and
+            <see cref="P:NAntCollections.List.ListRemove.Position"/> at the same time.
+            </summary>
+            <remarks>
+            If multiple items in the list have
+            the specified value, only one will
+            be removed.
+            </remarks>
+        </member>
+        <member name="P:NAntCollections.List.ListRemove.Position">
+            <summary>
+            The position of the item to remove.
+            Cannot specify both <see cref="P:NAntCollections.List.ListRemove.Value"/> and
+            <see cref="P:NAntCollections.List.ListRemove.Position"/> at the same time.
+            </summary>
+        </member>
+        <member name="T:NAntCollections.List.ListManager">
+            <summary>
+            Utility class for working with lists.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.List.ListManager.GetList(System.String)">
+            <summary>
+            Get a list based on a name.
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <remarks>
+            If a list of the given name does not exist yet, it will
+            be created and returned.
+            </remarks>
+            <returns>
+            The list with the given <paramref name="name"/>.
+            </returns>
+        </member>
+        <member name="M:NAntCollections.List.ListManager.ListExists(System.String)">
+            <summary>
+            Determine whether a list of a given name exists.
+            </summary>
+            <param name="listName">The name of the list.</param>
+            <returns>
+            <see langword="true" /> if the list exists;
+            <see langword="false" /> otherwise.
+            </returns>
+        </member>
+        <member name="M:NAntCollections.List.ListManager.Reset">
+            <summary>
+            Remove all lists from memory.
+            </summary>
+            <remarks>
+            Primarily used by unit tests.
+            </remarks>
+        </member>
+        <member name="T:NAntCollections.Utility.NAntUtility">
+            <summary>
+            Utility methods/properties to make it easier to deal with NAnt.
+            </summary>
+        </member>
+        <member name="M:NAntCollections.Utility.NAntUtility.AddOrOverwriteProperty(NAnt.Core.Project,System.String,System.String)">
+            <summary>
+            Sets a property to a value for a given NAnt project.  If the property
+            already exists on the project, the old value will be overwritten with
+            the new value.
+            </summary>
+            <param name="proj">The project on which to set the property.</param>
+            <param name="prop">The name of the property to set.</param>
+            <param name="val">The value to set the property to.</param>
+        </member>
+        <member name="P:NAntCollections.Utility.NAntUtility.ConsoleWidth">
+            <summary>
+            Returns the total width of the NAnt output console.
+            </summary>
+            <remarks>
+            This is hardcoded at 75 right now.  For some reason Console.BufferWidth
+            is throwing a System.IO error when NAnt is executed inside UTs.
+            </remarks>
+        </member>
+    </members>
+</doc>

@@ -7,3 +7,4 @@ ConfMSProject.*.ReSharper.user
 ConfMSProject.suo
 ConfMSProject/ConfMSProject.csproj.user
 ConfMSTest/ConfMSTest.csproj.user
+*.log
