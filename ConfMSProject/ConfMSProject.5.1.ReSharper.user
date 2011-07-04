@@ -7,7 +7,9 @@
     </boolean>
   </SettingsComponent>
   <RecentFiles>
-    <RecentFiles />
+    <RecentFiles>
+      <File id="6A989C04-2800-45C6-A3A8-694C27296DFF/d:Properties/f:AssemblyInfo.cs" caret="0" fromTop="0" />
+    </RecentFiles>
     <RecentEdits />
   </RecentFiles>
   <NAntValidationSettings>
