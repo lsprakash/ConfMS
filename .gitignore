@@ -1,9 +1,9 @@
-ConfMSProject/_ReSharper.ConfMSProject/**/*
-ConfMSProject/obj/**/*
-ConfMSTest/obj/**/*
-ConfMSProject/ConfMSProject.5.1.ReSharper.user
-ConfMSProject/ConfMSProject.suo
-ConfMSProject/_ReSharper.ConfMSProject/*
-ConfMSProject/bin/*
+_ReSharper.ConfMSProject/
+ConfMSProject/obj/
+ConfMSTest/obj/
+ConfMSProject/bin/
+ConfMSTest/bin/
+ConfMSProject.*.ReSharper.user
+ConfMSProject.suo
 ConfMSProject/ConfMSProject.csproj.user
 ConfMSTest/ConfMSTest.csproj.user
