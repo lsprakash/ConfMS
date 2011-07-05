@@ -12,12 +12,12 @@ namespace ConfMSTest.domain
         {
             string title = "RubyConf";
             DateTime startTime = new DateTime(2011, 7, 5, 9, 0, 0);
-            int durationInHours = 8; //TODO: replace primitive with Duration class.
-            Conference conference = new Conference(title, startTime, durationInHours);
+            Duration duration = new Duration(8);
+            Conference conference = new Conference(title, startTime, duration);
 
             Assert.AreEqual(title, conference.Title);
             Assert.AreEqual(startTime, conference.StartTime);
-            Assert.AreEqual(durationInHours, conference.Duration);
+            Assert.AreEqual(duration.Hours, conference.Duration.Hours);
         }
     }
 }

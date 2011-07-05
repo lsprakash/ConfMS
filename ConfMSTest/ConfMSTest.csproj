@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="domain\ConferenceTest.cs" />
     <Compile Include="domain\SessionTest.cs" />
     <Compile Include="domain\DummyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
