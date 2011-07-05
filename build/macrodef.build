@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <project name="SharedMacroDef" basedir=".">
-  <loadtasks path="NantTasks"/>
+  <loadtasks path="build\NantTasks"/>
+  
   <macrodef name="component-compile">
     <attributes>
       <attribute name="solution" />
@@ -29,6 +30,7 @@
       <project-compile path="${solution}" />
     </sequential>
   </macrodef>
+  
   <macrodef name="project-compile">
     <attributes>
       <attribute name="path" />
@@ -36,6 +38,18 @@
     <sequential>
       <exec program="${visualstudio-compiler}"
       commandline="&quot;${path}&quot; /build ${compile.configuration}" />
+    </sequential>
+  </macrodef>
+  
+   <macrodef name="run-tests">
+    <attributes>
+      <attribute name="test.assemblies"/>
+      <attribute name="component.name" default="donkey"/>
+    </attributes>
+    <sequential>
+      <property name="output.dir" value="${buildoutput.dir}\${component.name}"/>
+      <mkdir dir="${output.dir}"/>
+      <exec program="${nunit}" commandline='/nologo ${test.assemblies} /xml="${output.dir}\utResults.xml" /labels'/>
     </sequential>
   </macrodef>
 </project>
