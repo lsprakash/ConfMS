@@ -8,3 +8,4 @@ ConfMSProject.suo
 ConfMSProject/ConfMSProject.csproj.user
 ConfMSTest/ConfMSTest.csproj.user
 *.log
+build/output/
