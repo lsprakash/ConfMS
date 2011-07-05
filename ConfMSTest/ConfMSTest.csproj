@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="domain\ConferenceTest.cs" />
     <Compile Include="domain\SessionTest.cs" />
-    <Compile Include="domain\DummyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="repository\DummyClass.cs" />
   </ItemGroup>
