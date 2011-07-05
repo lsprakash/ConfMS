@@ -1,13 +1,20 @@
 <?xml version="1.0"?>
-<project name="ConfMS" default="compile" basedir=".">
-  <property name="solution.dir" value=".."/>
-  <property name="compile.configuration" value="Debug"/>
-
-  <include buildfile="macrodef.build"/>
-
-  <echo message="hehehehe${environment::get-variable('VS100COMNTOOLS')}"/>
+<project name="ConfMS" default="test" basedir="..">
+  <property name="solution.dir" value="." />
+  <property name="compile.configuration" value="Debug" />
   <property name="visualstudio-compiler" value="${environment::get-variable('VS100COMNTOOLS')}..\IDE\devenv.com" readonly="true" />
+  <property name="nunit" value="${solution.dir}\tools\NUnit\nunit-console.exe" />
+  <property name="build.dir" value="${solution.dir}\build" />
+  <property name="buildoutput.dir" value="${build.dir}\output" />
+  
+  <include buildfile="build\macrodef.build" />
+  
   <target name="compile">
-	<component-compile solution="${solution.dir}/ConfMSProject.sln" />
+    <component-compile solution="${solution.dir}/ConfMSProject.sln" />
+  </target>
+  
+  <target name="test" depends="compile">
+    <delete dir="${buildoutput.dir}" />
+	<run-tests test.assemblies="${solution.dir}\ConfMSTest\bin\${compile.configuration}\ConfMSTest.dll" component.name="ConfMSUnitTest"/>
   </target>
 </project>
