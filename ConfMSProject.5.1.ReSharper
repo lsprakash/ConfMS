@@ -5,11 +5,7 @@
     <Sharing>SOLUTION</Sharing>
     <CSharp>
       <FormatSettings>
-        <ARRANGE_MODIFIER_IN_EXISTING_CODE>False</ARRANGE_MODIFIER_IN_EXISTING_CODE>
-        <EMPTY_BLOCK_STYLE>TOGETHER_SAME_LINE</EMPTY_BLOCK_STYLE>
-        <INITIALIZER_BRACES>NEXT_LINE</INITIALIZER_BRACES>
-        <KEEP_BLANK_LINES_IN_CODE>1</KEEP_BLANK_LINES_IN_CODE>
-        <KEEP_BLANK_LINES_IN_DECLARATIONS>1</KEEP_BLANK_LINES_IN_DECLARATIONS>
+        <EXPLICIT_INTERNAL_MODIFIER>False</EXPLICIT_INTERNAL_MODIFIER>
         <MODIFIERS_ORDER IsNull="False">
           <Item>public</Item>
           <Item>protected</Item>
@@ -26,15 +22,6 @@
           <Item>unsafe</Item>
           <Item>volatile</Item>
         </MODIFIERS_ORDER>
-        <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
-        <SPACE_BEFORE_CATCH_PARENTHESES>False</SPACE_BEFORE_CATCH_PARENTHESES>
-        <SPACE_BEFORE_FOR_PARENTHESES>False</SPACE_BEFORE_FOR_PARENTHESES>
-        <SPACE_BEFORE_FOREACH_PARENTHESES>False</SPACE_BEFORE_FOREACH_PARENTHESES>
-        <SPACE_BEFORE_IF_PARENTHESES>False</SPACE_BEFORE_IF_PARENTHESES>
-        <SPACE_BEFORE_SWITCH_PARENTHESES>False</SPACE_BEFORE_SWITCH_PARENTHESES>
-        <SPACE_BEFORE_TYPEOF_PARENTHESES>False</SPACE_BEFORE_TYPEOF_PARENTHESES>
-        <SPACE_BEFORE_WHILE_PARENTHESES>False</SPACE_BEFORE_WHILE_PARENTHESES>
-        <STICK_COMMENT>False</STICK_COMMENT>
       </FormatSettings>
       <UsingsSettings />
       <Naming2>
@@ -57,11 +44,6 @@
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
-        <UserRule Inspect="False" Prefix="" Suffix="Test" Style="AaBb" StaticnessKind="No" AccessRight="Public" Description="TestClasses">
-          <ElementKinds>
-            <Kind Name="TEST_TYPE" />
-          </ElementKinds>
-        </UserRule>
       </Naming2>
     </CSharp>
     <VB>
@@ -93,8 +75,8 @@
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
-      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
-      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Constants" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
