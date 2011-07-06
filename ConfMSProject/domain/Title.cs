@@ -2,7 +2,12 @@
 {
     public class Title
     {
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
+
+        public Title()
+        {
+            
+        }
 
         public Title(string title)
         {
