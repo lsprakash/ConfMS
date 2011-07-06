@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="ConfMSProject" namespace="ConfMSProject">
+  <class name="ConfMSProject.domain.Conference" table="Conference">
+    <id name="Id">
+      <generator class="native" />
+    </id>
+
+    <component name="Title" class="ConfMSProject.domain.Title">
+      <property name="Name" type="string" length="60" column="Title"></property>
+    </component>
+
+    <property name="StartTime"  type="DateTime" />
+    <component name="Duration" class="ConfMSProject.domain.Duration">
+      <property name="Hours" type="int" column="Duration"></property>
+    </component>
+  </class>
+</hibernate-mapping>

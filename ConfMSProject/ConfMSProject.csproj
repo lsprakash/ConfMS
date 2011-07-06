@@ -73,16 +73,25 @@
     <Compile Include="domain\Title.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="repository\ConferenceDAO.cs" />
+    <Compile Include="repository\ConferenceRepository.cs" />
+    <Compile Include="repository\Configurations.cs" />
     <Compile Include="repository\ConfSessionRepository.cs" />
     <Compile Include="repository\NHibernateSessionManager.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="config\confms.xml" />
-    <Content Include="domain\mappings\Conference.hbm.xml" />
-    <EmbeddedResource Include="domain\mappings\ConfSession.hbm.xml">
+    <EmbeddedResource Include="domain\mappings\Conference.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="domain\mappings\ConfSession.hbm.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

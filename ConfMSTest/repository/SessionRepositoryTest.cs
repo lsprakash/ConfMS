@@ -8,13 +8,10 @@ using NUnit.Framework;
 namespace ConfMSTest.domain
 {
     [TestFixture]
-    class SessionRepositoryTest
+    class SessionRepositoryTest : RepositoryTest //TODO: Change class name to ConfSessionRepositoryTest
     {
-        [TestFixtureSetUp]
-        public void setDB()
+        public SessionRepositoryTest()
         {
-            NHibernateSessionManager.InitalizeSessionFactory(new FileInfo("domain/mappings/ConfSession.hbm.xml"));
-            NHibernateSessionManager.CreateDB();
         }
 
         [Test]
@@ -23,15 +20,16 @@ namespace ConfMSTest.domain
             var confSession = new ConfSession("Test Session");
             confSession.Description = "Some long description.. little long only";
 
-            var repository = new ConfSessionRepository();
+            var repository = new ConfSessionRepository(session);
             repository.Save(confSession);
-
+            
             var sessions = repository.FindByTitle("Test");
             var returnedSession = sessions[0];
             Assert.AreEqual(returnedSession, confSession);
 
             var sessions2 = repository.FindByTitle("ghhg");
             Assert.True(sessions2.Count==0);
+            session.Close();
         }
 
         [Test]
@@ -41,13 +39,14 @@ namespace ConfMSTest.domain
             confSession.Description = "Session with a Workshop Format";
             confSession.Format = new Format("WorkShop", new Duration(3));
 
-            var repository = new ConfSessionRepository();
+            var repository = new ConfSessionRepository(session);
             repository.Save(confSession);
 
             
             var sessions = repository.FindByTitle("Workshop");
             var returnedSession = sessions[0];
             //Assert.AreEqual(returnedSession, confSession);
+            session.Close();
         }
     }
 }
