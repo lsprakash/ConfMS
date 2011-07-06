@@ -14,6 +14,11 @@ namespace ConfMSProject.repository
         protected static ISessionFactory sessionFactory;
         protected static Configuration configuration;
 
+        public ISession openSession()
+        {
+            return sessionFactory.OpenSession();
+        }
+
         public static void InitalizeSessionFactory(params FileInfo[] hbmFiles)
         {
             try
@@ -27,7 +32,7 @@ namespace ConfMSProject.repository
                                              },
                                          {"dialect", "NHibernate.Dialect.SQLiteDialect"},
                                          {"connection.provider", "NHibernate.Connection.DriverConnectionProvider"},
-                                         {"connection.connection_string", "Data Source=:memory:;Version=3;New=True;"},
+                                         {"connection.connection_string", "Data Source=testDB.db;Version=3;New=True;"},
                                          {"connection.release_mode", "auto"},
                                          {"show_sql", "true"}
                                      };
@@ -40,8 +45,6 @@ namespace ConfMSProject.repository
                 }
                 configuration.BuildMapping();
                 sessionFactory = configuration.BuildSessionFactory();
-
-                CreateDB();
             }
             catch (Exception ex)
             {
@@ -54,7 +57,6 @@ namespace ConfMSProject.repository
         public static void CreateDB()
         {
             var openSession = sessionFactory.OpenSession();
-            Session = openSession;
             var tx = openSession.BeginTransaction();
             var connection = openSession.Connection;
             using (var writer = new StringWriter())
@@ -62,8 +64,8 @@ namespace ConfMSProject.repository
                 new SchemaExport(configuration).Execute(false, true, false, connection, writer);
                 Console.WriteLine(writer);
             }
+            tx.Commit();
+            openSession.Close();
         }
-
-        public static ISession Session {get;set;}
     }
 }
