@@ -4,9 +4,9 @@ namespace ConfMSProject.domain
 {
     public class Conference
     {
-        public string Title { get; set; }
-        public DateTime StartTime { get; set; }
-        public Duration Duration { get; set; }
+        public string Title { get; private set; }
+        public DateTime StartTime { get; private set; }
+        public Duration Duration { get; private set; }
 
         public Conference(string title, DateTime startTime, Duration duration)
         {
