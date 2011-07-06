@@ -65,6 +65,8 @@
     <Compile Include="domain\AppStringEqualityTest.cs" />
     <Compile Include="domain\ConferenceTest.cs" />
     <Compile Include="domain\SpeakerTest.cs" />
+    <Compile Include="repository\BaseRepositoryTest.cs" />
+    <Compile Include="repository\SpeakerRepositoryTest.cs" />
     <Compile Include="repository\SessionRepositoryTest.cs" />
     <Compile Include="domain\SessionTest.cs" />
     <Compile Include="repository\NHibernateInMemoryTestFixtureBase.cs" />

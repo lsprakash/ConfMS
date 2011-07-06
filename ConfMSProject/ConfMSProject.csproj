@@ -69,17 +69,23 @@
     <Compile Include="domain\Email.cs" />
     <Compile Include="domain\Format.cs" />
     <Compile Include="domain\Name.cs" />
+    <Compile Include="domain\Organization.cs" />
     <Compile Include="domain\Speaker.cs" />
     <Compile Include="domain\Title.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="repository\BaseRepository.cs" />
     <Compile Include="repository\ConferenceDAO.cs" />
     <Compile Include="repository\ConfSessionRepository.cs" />
     <Compile Include="repository\NHibernateSessionManager.cs" />
+    <Compile Include="repository\SpeakerRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <Content Include="config\confms.xml" />
     <Content Include="domain\mappings\Conference.hbm.xml" />
+    <EmbeddedResource Include="domain\mappings\Speaker.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="domain\mappings\ConfSession.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
