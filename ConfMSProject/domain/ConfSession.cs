@@ -31,8 +31,7 @@ namespace ConfMSProject.domain
             {
                 return false;
             }
-            ConfSession other = (ConfSession) obj;
-            return (this.SessionTitle.Equals(other.SessionTitle) && this.Format.Equals(other.Format));
+            return this.SessionTitle.Equals(((ConfSession) obj).SessionTitle);
         }
 
         // override object.GetHashCode
