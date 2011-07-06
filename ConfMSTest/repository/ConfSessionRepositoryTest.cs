@@ -8,9 +8,9 @@ using NUnit.Framework;
 namespace ConfMSTest.domain
 {
     [TestFixture]
-    class SessionRepositoryTest : RepositoryTest //TODO: Change class name to ConfSessionRepositoryTest
+    class ConfSessionRepositoryTest : RepositoryTest //TODO: Change class name to ConfSessionRepositoryTest
     {
-        public SessionRepositoryTest()
+        public ConfSessionRepositoryTest()
         {
         }
 
