@@ -20,5 +20,15 @@ namespace ConfMSTest.domain
                 Assert.AreEqual(new Title(SESSION_NAME), session.SessionTitle);
                 Assert.AreNotEqual(new Title("Blah"), session.SessionTitle);
             }
+
+            [Test]
+            public void ShouldAssociateFormatToConfSession()
+            {
+                var format = new ConfMSProject.domain.Format("WorkShop", new Duration(3));
+                var confSession = new ConfSession("Test Session");
+
+                confSession.Format = format;
+                Assert.AreEqual(format, confSession.Format);
+            }
     }
 }

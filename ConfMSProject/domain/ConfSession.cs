@@ -21,5 +21,7 @@ namespace ConfMSProject.domain
         public virtual string Description { get; set; }
         
         public virtual string Id { get; set; }
+
+        public virtual Format Format { get; set; }
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
 using ConfMSProject.domain;
 using ConfMSProject.repository;
+using ConfMSTest.repository;
 using NUnit.Framework;
 
-namespace ConfMSTest.repository
+namespace ConfMSTest.domain
 {
     [TestFixture]
     class SessionRepositoryTest : NHibernateInMemoryTestFixtureBase
@@ -29,6 +26,9 @@ namespace ConfMSTest.repository
             Assert.True(sessions2.Count==0);
 
         }
+
+
+
 
     }
 }
